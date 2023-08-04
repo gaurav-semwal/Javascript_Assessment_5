@@ -182,14 +182,70 @@ console.log(resolve);
 console.log(reject);
 });
 ```
+ # Question No.7 What are closures? Explain the output of below code snippet?
+```js
+"use strict"; 
+function outer() { 
+const a = 10; 
+let b = 100; 
+function inner() { 
+let c = 20; 
+console.log(`a=${a}, b=${b}, c=${c}`); 
+b++; 
+c++; 
+} 
+return inner; 
+} 
+const fnFirst = outer(); 
+const fnSecond = outer(); 
+console.log(fnFirst); 
+fnFirst(); 
+fnFirst(); 
+fnFirst(); 
+fnSecond();
+```
+* Output :
+```js
+[Function: inner]
+a=10, b=100, c=20
+a=10, b=101, c=20
+a=10, b=102, c=20
+a=10, b=100, c=20
+```
+`Explanation` : `Closures`: When a function is define inside the another function it form a closures. The inner function has access to its own variable and parameter, as well as to the variables and parameters of the outer function. Closures are useful because they allow functions to remember the data even when they are executed somewhere in the code.
 
+`Code Explanation :` We have taken two function outer() and inner(). The outer function contains two variable a and b and return the ineer() function. In outer function  we have taken two variable a, b = 10,100. And then in inner function we have define c variable, c=20. Inisde the inner function we given a console.log statement which will print the value of a,b and c. And on the next line the b++ and c++ will increment the bvalue of b and c by 1. On next line the outer function will return  the inner function means when we call the outer() it will return inner() function. Now when we call the log "fnfirst" then the inner() function return by the outer() will display the entire function.
+"fnfirst" when we call this it will execute the inner function with the value a=10, b=101, c=21 {because of increment in b and c} and similarly same goes for next two "fnfirst" function. And in "fnsecond" function it will simply log the value of inner function which is a=10, b=100, c-=20
 
+ # Question No.8 What are generator functions? Explain it with the help of an example.
+`Explanation :` Generator functions are a function that allow us to pause and resume the execution. We define them by `function*` syntax instead of using the regular function syntax.
+```js
+function* generatorfucntion() {
+console.log("Before the first yield");
+yield 222;
+console.log("Before the second yield");
+yield 200;
+}
+const generator = generatorfucntion();
+console.log(generator.next());
+```
+*Output :
+```js
+Before the first yield
+{value: 222, done: false}
+```
+ # Question No.9 Create a prototype of the reduce method.
+ ```js
+Array.prototype.reduce = function (array, reducer, value) {
+  let acc = value !== undefined ? value : array[0];
+  const firstIndex = value !== undefined ? 0 : 1;
 
-
-
-
-
-
-
-
-
+  for (let i = firstIndex; i < array.length; i++) {
+    acc = reducer(acc, array[i], i, array);
+  }
+  return acc;
+};
+const input = [1, 2, 3];
+const sum = input.reduce(input, (acc, curr) => acc + curr, 0);
+console.log(sum);
+```
